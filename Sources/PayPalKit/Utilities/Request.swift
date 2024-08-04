@@ -18,7 +18,7 @@ class Request {
             let requestDictionary = ["request": base64EncodedRequest]
             return try JSONEncoder().encode(requestDictionary)
         } catch {
-            throw SubscriptionError.jsonEncodingFailed
+            throw RequestError.jsonEncodingFailed
         }
     }
     
@@ -26,7 +26,7 @@ class Request {
         guard let jsonData = jsonString.data(using: .utf8),
               let jsonObject = try? JSONDecoder().decode([String: String].self, from: jsonData),
               let base64EncodedRequest = jsonObject["request"] else {
-            throw SubscriptionError.jsonDecodingFailed
+            throw RequestError.jsonDecodingFailed
         }
         return base64EncodedRequest
     }
@@ -60,8 +60,15 @@ class Request {
         }
         guard let bodyString = String(data: bodyData, encoding: .utf8) else {
             // TODO: Use PhonePeError instead of SubscriptionError
-            throw SubscriptionError.bodyExtractionFailed
+            throw RequestError.bodyExtractionFailed
         }
         return bodyString
     }
+}
+
+enum RequestError: Error {
+    case jsonEncodingFailed
+    case dictionaryConversionFailed
+    case bodyExtractionFailed
+    case jsonDecodingFailed
 }
