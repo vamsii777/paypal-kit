@@ -2,7 +2,7 @@ import NIO
 import AsyncHTTPClient
 
 public protocol OrderRoutes: PayPalAPIRoute {
-    func createOrder(request: CreateOrderRequest) async throws -> Order
+    func createOrder(request: CreateOrderRequest) async throws -> OrderDetails
     func showOrder(orderId: String) async throws -> Order
 }
 
@@ -17,7 +17,7 @@ public struct PayPalOrderRoutes: OrderRoutes {
     }
     
     
-    public func createOrder(request: CreateOrderRequest) async throws -> Order {
+    public func createOrder(request: CreateOrderRequest) async throws -> OrderDetails {
         let path = "/v2/checkout/orders"
         let requestBody = try Request.constructRequestBody(request: request)
         return try await apiHandler.send(
