@@ -6,7 +6,8 @@ public protocol OrderRoutes: PayPalAPIRoute {
     func showOrder(orderId: String) async throws -> OrderDetails
     func confirmPaymentSource(orderId: String, request: ConfirmPaymentSourceRequest) async throws -> OrderDetails
     func authorizeOrder(orderId: String, request: AuthorizeOrderRequest) async throws -> AuthorizeOrderResponse
-     func captureOrder(orderId: String, request: CaptureOrderRequest) async throws -> OrderDetails
+    func captureOrder(orderId: String, request: CaptureOrderRequest) async throws -> OrderDetails
+    func updateOrder(orderId: String, patchOperations: [PatchOperation]) async throws
 }
 
 public struct PayPalOrderRoutes: OrderRoutes {
@@ -84,6 +85,23 @@ public struct PayPalOrderRoutes: OrderRoutes {
         
         return try await apiHandler.send(
             method: .POST,
+            path: path,
+            body: .data(requestBody),
+            headers: headers
+        )
+    }
+
+    /// Updates an order.
+    /// - Parameters:
+    ///   - orderId: The ID of the order to update.
+    ///   - patchOperations: An array of `PatchOperation` structs representing the desired changes to the order.
+    /// - Returns: Nothing (HTTP 204 No Content).
+    public func updateOrder(orderId: String, patchOperations: [PatchOperation]) async throws {
+        let path = "/v2/checkout/orders/\(orderId)"
+        let requestBody = try Request.constructRequestBody(request: patchOperations)
+        
+        _ = try await apiHandler.send(
+            method: .PATCH,
             path: path,
             body: .data(requestBody),
             headers: headers
