@@ -16,7 +16,7 @@ public struct PayPalOrderRoutes: OrderRoutes {
         self.baseUrl = baseUrl
     }
     
-    /*
+    
     public func createOrder(request: CreateOrderRequest) async throws -> Order {
         let path = "/v2/checkout/orders"
         let requestBody = try Request.constructRequestBody(request: request)
@@ -27,7 +27,6 @@ public struct PayPalOrderRoutes: OrderRoutes {
             headers: headers
         )
     }
-    */
 
     public func showOrder(orderId: String) async throws -> Order {
         let path = "/v2/checkout/orders/\(orderId)"
