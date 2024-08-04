@@ -9,7 +9,7 @@
 
 ## Installation
 
-To start using PhonePeKit, in your `Package.swift`, add the following
+To start using PayPalKit, in your `Package.swift`, add the following
 
 ```swift
 .package(url: "https://github.com/vamsii777/PayPal-kit.git", from: "main")
