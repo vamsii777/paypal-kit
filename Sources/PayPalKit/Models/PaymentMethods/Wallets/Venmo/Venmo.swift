@@ -15,11 +15,29 @@ struct Venmo: Codable, Hashable {
     /// Additional attributes associated with the use of this wallet.
     let attributes: VenmoAttributes?
 
+    let userName: String?
+
+    let emailAddress: String?
+
+    let accountId: String?
+
+    let name: Name?
+
+    let phoneNumber: PhoneNumber?
+
+    let address: Address?
+
     enum CodingKeys: String, CodingKey {
         case experienceContext = "experience_context"
         case vaultID = "vault_id"
         case emailAddress = "email_address"
         case attributes = "attributes"
+        case userName = "user_name"
+        case emailAddress = "email_address"
+        case accountId = "account_id"
+        case name = "name"
+        case phoneNumber = "phone_number"
+        case address = "address"
     }
 }
 

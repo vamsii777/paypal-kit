@@ -13,10 +13,17 @@ struct P24: Codable, Hashable {
     /// Customizes the payer experience during the approval process for the payment.
     let experienceContext: ExperienceContext?
 
+    let paymentDescriptor: String?
+    let methodId: String?
+    let methodDescription: String?
+
     enum CodingKeys: String, CodingKey {
         case name = "name"
         case email = "email"
         case countryCode = "country_code"
         case experienceContext = "experience_context"
+        case paymentDescriptor = "payment_descriptor"
+        case methodId = "method_id"
+        case methodDescription = "method_description"
     }
 }

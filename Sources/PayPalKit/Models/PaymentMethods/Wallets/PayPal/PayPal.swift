@@ -25,7 +25,7 @@ struct PayPal: Codable, Hashable {
     /// The address of the PayPal account holder. Supports only the address_line_1, address_line_2, admin_area_1, admin_area_2, postal_code, and country_code properties. Also referred to as the billing address of the customer.
     let address: Address?
     /// Additional attributes associated with the use of this wallet.
-    let attributes: PayPalAttributes?
+    let attributes: PayPalAttributesResponse?
 
     enum CodingKeys: String, CodingKey {
         case experienceContext = "experience_context"
@@ -39,4 +39,59 @@ struct PayPal: Codable, Hashable {
         case address = "address"
         case attributes = "attributes"
     }
+}
+
+protocol PayPalResponse: PayPal {
+    var experienceContext: ExperienceContext? { get }
+    var billingAgreementID: String? { get }
+    var vaultID: String? { get }
+    var emailAddress: String? { get }
+    var name: Name? { get }
+    var phone: Phone? { get }
+    var birthDate: String? { get }
+    var taxInfo: TaxInfo? { get }
+    var address: Address? { get }
+    var attributes: PayPalAttributesResponse? { get }
+    var accountStatus: AccountStatus? { get }
+    var phoneType: PhoneType? { get }
+    var businessName: String? { get }
+    var accountId: String? { get }
+    var birthDate: String? { get }
+    var address: Address? { get }
+
+    enum CodingKeys: String, CodingKey {
+        case experienceContext = "experience_context"
+        case billingAgreementID = "billing_agreement_id"
+        case vaultID = "vault_id"
+        case emailAddress = "email_address"
+        case name = "name"
+        case phone = "phone"
+        case birthDate = "birth_date"
+        case taxInfo = "tax_info"
+        case address = "address"
+        case attributes = "attributes"
+        case accountStatus = "account_status"
+        case phoneType = "phone_type"
+        case businessName = "business_name"
+        case accountId = "account_id"
+        case birthDate = "birth_date"
+        case address = "address"
+    }
+
+}
+
+// MARK: - AccountStatus
+enum AccountStatus: String, Codable, Hashable {
+    case verified = "VERIFIED"
+    case unverified = "UNVERIFIED"
+}
+
+// MARK: - PhoneType
+enum PhoneType: String, Codable, Hashable {
+    case home = "HOME"
+    case work = "WORK"
+    case mobile = "MOBILE"
+    case fax = "FAX"
+    case other = "OTHER"
+    case pager = "PAGER"
 }

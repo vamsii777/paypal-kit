@@ -11,9 +11,15 @@ struct Trustly: Codable, Hashable {
     /// Customizes the payer experience during the approval process for the payment.
     let experienceContext: ExperienceContext?
 
+    let bic: String?
+
+    let ibanLastChars: String?
+
     enum CodingKeys: String, CodingKey {
         case name = "name"
         case countryCode = "country_code"
         case experienceContext = "experience_context"
+        case bic = "bic"
+        case ibanLastChars = "iban_last_chars"
     }
 }

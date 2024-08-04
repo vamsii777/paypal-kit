@@ -15,6 +15,14 @@ struct VenmoVault: Codable, Hashable {
     /// Create multiple payment tokens for the same payer, merchant/platform combination. Use this when the customer has not logged in at merchant/platform. The payment token thus generated, can then also be used to create the customer account at merchant/platform. Use this also when multiple payment tokens are required for the same payer, different customer at merchant/platform. This helps to identify customers distinctly even though they may share the same Venmo account.
     let permitMultiplePaymentTokens: Bool?
 
+    let status: Status?
+
+    let id: String?
+
+    let links: [Link]?
+
+    let customer: Customer?
+
     enum CodingKeys: String, CodingKey {
         case storeInVault = "store_in_vault"
         case description = "description"
@@ -22,5 +30,9 @@ struct VenmoVault: Codable, Hashable {
         case usageType = "usage_type"
         case customerType = "customer_type"
         case permitMultiplePaymentTokens = "permit_multiple_payment_tokens"
+        case status = "status"
+        case id = "id"
+        case links = "links"
+        case customer = "customer"
     }
 }
