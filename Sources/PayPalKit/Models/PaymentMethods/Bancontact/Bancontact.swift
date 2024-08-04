@@ -11,9 +11,18 @@ struct Bancontact: Codable, Hashable {
     /// Customizes the payer experience during the approval process for the payment.
     let experienceContext: ExperienceContext?
 
+    let cardLastDigits: String?
+
+    let bic: String?
+
+    let ibanLastChars: String?
+
     enum CodingKeys: String, CodingKey {
         case name = "name"
         case countryCode = "country_code"
         case experienceContext = "experience_context"
+        case cardLastDigits = "card_last_digits"
+        case bic = "bic"
+        case ibanLastChars = "iban_last_chars"
     }
 }
