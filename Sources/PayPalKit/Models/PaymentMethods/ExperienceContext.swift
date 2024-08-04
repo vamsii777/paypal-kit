@@ -24,6 +24,10 @@ struct ExperienceContext: Codable, Hashable {
     let locale: String?
     /// The customer and merchant payment preferences.
     let paymentMethod: PaymentMethod?
+    /// The payer's User Agent. For example, Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0).
+    let consumerUserAgent: String?
+    /// The IP address of the consumer. It could be either IPv4 or IPv6.
+    let consumerIP: String?
 
     enum CodingKeys: String, CodingKey {
         case brandName = "brand_name"
@@ -34,6 +38,8 @@ struct ExperienceContext: Codable, Hashable {
         case cancelURL = "cancel_url"
         case locale = "locale"
         case paymentMethod = "payment_method"
+        case consumerUserAgent = "consumer_user_agent"
+        case consumerIP = "consumer_ip"
     }
 }
 
