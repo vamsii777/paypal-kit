@@ -5,6 +5,7 @@ public protocol OrderRoutes: PayPalAPIRoute {
     func createOrder(request: CreateOrderRequest) async throws -> OrderDetails
     func showOrder(orderId: String) async throws -> OrderDetails
     func confirmPaymentSource(orderId: String, request: ConfirmPaymentSourceRequest) async throws -> OrderDetails
+    func authorizeOrder(orderId: String, request: AuthorizeOrderRequest) async throws -> AuthorizeOrderResponse
 }
 
 public struct PayPalOrderRoutes: OrderRoutes {
@@ -46,6 +47,23 @@ public struct PayPalOrderRoutes: OrderRoutes {
     public func confirmPaymentSource(orderId: String, request: ConfirmPaymentSourceRequest) async throws -> OrderDetails {
         let path = "/v2/checkout/orders/\(orderId)/confirm-payment-source"
         let requestBody = try Request.constructRequestBody(request: request)
+        return try await apiHandler.send(
+            method: .POST,
+            path: path,
+            body: .data(requestBody),
+            headers: headers
+        )
+    }
+
+    /// Authorizes payment for an order.
+    /// - Parameters:
+    ///   - orderId: The ID of the order to authorize.
+    ///   - request: The `AuthorizeOrderRequest` object.
+    /// - Returns: The `AuthorizeOrderResponse` object containing details of the authorized payment.
+    public func authorizeOrder(orderId: String, request: AuthorizeOrderRequest) async throws -> AuthorizeOrderResponse {
+        let path = "/v2/checkout/orders/\(orderId)/authorize"
+        let requestBody = try Request.constructRequestBody(request: request)
+        
         return try await apiHandler.send(
             method: .POST,
             path: path,

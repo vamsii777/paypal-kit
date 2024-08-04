@@ -1,17 +1,17 @@
 import Foundation
 
-struct OrderDetails: Codable, Hashable {
-    let id: String?
+/// Response received after authorizing payment for an order. 
+struct AuthorizeOrderResponse: Codable, Hashable {
     let createTime: String?
     let updateTime: String?
+    let id: String?
     let processingInstruction: ProcessingInstruction?
     let purchaseUnits: [PurchaseUnit]?
     let links: [Link]?
     let paymentSource: PaymentSource?
-    let payer: Payer?
     let intent: Intent?
-    let status: Status?
-    let taxTotal: Money?
+    let payer: Payer?
+    let status: OrderStatus?
 
     enum CodingKeys: String, CodingKey {
         case createTime = "create_time"
