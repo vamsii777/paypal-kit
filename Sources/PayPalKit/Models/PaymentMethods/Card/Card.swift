@@ -19,6 +19,7 @@ struct Card: Codable, Hashable {
     let vaultID: String?
     let networkToken: NetworkToken?
     let expirenceContext: ExperienceContext?
+    let binDetails: BinDetails?
 
     enum CodingKeys: String, CodingKey {
         case name = "name"
@@ -38,6 +39,7 @@ struct Card: Codable, Hashable {
         case vaultID = "vault_id"
         case networkToken = "network_token"
         case expirenceContext = "experience_context"
+        case binDetails = "bin_details"
     }
 }
 
