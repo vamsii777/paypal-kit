@@ -37,7 +37,7 @@ extension HTTPClientRequest.Body {
 }
 
 // MARK: - PayPalAuthType
-enum PayPalAuthType {
+public enum PayPalAuthType {
     case clientSecret(clientId: String, secret: String)
     case bearerToken(token: String)
 }
