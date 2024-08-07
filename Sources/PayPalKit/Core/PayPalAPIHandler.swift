@@ -36,16 +36,22 @@ extension HTTPClientRequest.Body {
     }
 }
 
+// MARK: - PayPalAuthType
+enum PayPalAuthType {
+    case clientSecret(clientId: String, secret: String)
+    case bearerToken(token: String)
+}
+
 // MARK: - PayPalAPIHandler
 struct PayPalAPIHandler {
     private let httpClient: HTTPClient
-    private let accessToken: String
+    private let authType: PayPalAuthType
     private let environment: PayPalEnvironment
     private let decoder: JSONDecoder
     
-    init(httpClient: HTTPClient, accessToken: String, environment: PayPalEnvironment) {
+    init(httpClient: HTTPClient, authType: PayPalAuthType, environment: PayPalEnvironment) {
         self.httpClient = httpClient
-        self.accessToken = accessToken
+        self.authType = authType
         self.environment = environment
         self.decoder = JSONDecoder()
         self.decoder.dateDecodingStrategy = .iso8601
@@ -57,8 +63,16 @@ struct PayPalAPIHandler {
                           body: HTTPClientRequest.Body? = nil,
                           headers: HTTPHeaders) async throws -> T {
         var _headers: HTTPHeaders = ["Content-Type": "application/json",
-                                     "Accept": "application/json",
-                                     "Authorization": "Bearer \(accessToken)"]
+                                     "Accept": "application/json"]
+        
+        switch authType {
+        case .clientSecret(let clientId, let secret):
+            let authString = "\(clientId):\(secret)".data(using: .utf8)!.base64EncodedString()
+            _headers.add(name: "Authorization", value: "Basic \(authString)")
+        case .bearerToken(let token):
+            _headers.add(name: "Authorization", value: "Bearer \(token)")
+        }
+        
         headers.forEach { _headers.replaceOrAdd(name: $0.name, value: $0.value) }
         
         var request = HTTPClientRequest(url: "\(environment.baseUrl)\(path)?\(query)")
